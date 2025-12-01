@@ -1,1 +1,35 @@
+.env
+# Node modules
+backend/node_modules/
+gateway/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# TypeScript build output
+backend/dist/
+gateway/dist/
+backend/*.tsbuildinfo
+gateway/*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Docker
+docker/mongo-data/
 

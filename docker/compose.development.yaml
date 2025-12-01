@@ -1,6 +1,57 @@
-# services:
-  # backend:
+networks:
+ private_net:
+   driver: bridge
 
-  # gateway:
+services:
+  gateway:
+    build: 
+      context: ../gateway
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5921:5921"
+    networks:
+      - private_net
 
-  # mongo:
+    depends_on:
+      - backend
+
+    env_file:
+      - ../.env
+
+
+
+  backend:
+    build: 
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    networks:
+      - private_net
+    # ports:
+    #   - "3847:3847"
+
+    depends_on:
+      - mongo
+
+    env_file:
+      - ../.env
+
+    volumes:
+      - ../backend/src:/app/src
+      - ../backend/package.json:/app/package.json
+      - ../backend/package-lock.json:/app/package-lock.json
+
+
+
+  mongo:
+    image: mongo
+    networks:
+      - private_net
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+
+
+volumes:
+  mongo-data:
